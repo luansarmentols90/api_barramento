@@ -12,10 +12,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Api barramento',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        colorScheme: const ColorScheme.dark(),
       ),
-      home: const DashboarPage(title: 'Barramento'),
+      home: SafeArea(child: const DashboardPage(title: 'Barramento')),
     );
   }
 }

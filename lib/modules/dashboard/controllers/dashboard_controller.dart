@@ -1,3 +1,6 @@
+// ignore_for_file: unnecessary_this, avoid_print, library_private_types_in_public_api
+
+import 'package:app_barramento_api/modules/dashboard/models/responses/arts_model_response.dart';
 import 'package:app_barramento_api/modules/dashboard/services/dashboard_service.dart';
 import 'package:mobx/mobx.dart';
 
@@ -13,15 +16,45 @@ abstract class _DashboardController with Store {
   bool isLoading = false;
 
   @observable
-  dynamic model;
+  bool isError = false;
+
+  @observable
+  bool isLoadingLeading = false;
+
+  @observable
+  List<Art>? modelArts = <Art>[];
+
+  @observable
+  dynamic modelDistance;
+
+  @observable
+  bool isApiOnline = false;
 
   @action
-  Future<dynamic> getDataApi() async {
+  Future<dynamic> getArtsDataApi() async {
+
+    try{
+      this.isError = false;
+      this.isLoading = true;
+      this.modelArts = await _dashboardService.getArtsData();
+      this.isLoading = false;
+    
+    }catch(e){
+      this.isError = true;
+      print(e);
+      this.isLoading = false; 
+
+    }
+
+  }
+
+  @action
+  Future<dynamic> getDistanceDataApi() async {
 
     try{
     
       this.isLoading = true;
-      this.model = await _dashboardService.getData();
+      this.modelArts = await _dashboardService.getDistanceDataApi();
       this.isLoading = false;
     
     }catch(e){
@@ -29,6 +62,20 @@ abstract class _DashboardController with Store {
       print(e);
       this.isLoading = false; 
 
+    }
+
+  }
+
+  @action
+  Future<void> isApiOn() async {
+
+    try{
+      this.isLoadingLeading = true;
+      this.isApiOnline = await this._dashboardService.isApiOn();
+      this.isLoadingLeading = false;
+    }catch(e){
+     this.isApiOnline = false;
+     this.isLoadingLeading = false;
     }
 
   }
