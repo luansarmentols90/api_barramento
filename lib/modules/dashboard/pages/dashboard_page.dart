@@ -27,6 +27,7 @@ class _DashboardPageState extends State<DashboardPage> {
   Future<void> _loadData() async {
     await dashboardController.isApiOn();
     await dashboardController.getArtsDataApi();
+    await dashboardController.getDistanceDataApi();
   }
 
   _buildLeading() {
@@ -96,6 +97,13 @@ class _DashboardPageState extends State<DashboardPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Flexible(child: Text('Profissional: ${art.profissional ?? 'Sem registro do profissional'}')),
+              ],
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Flexible(child: Text('Distância: ${this.dashboardController.distanceObj!.distanceText!.s0 ?? 'Sem distância registrada'}')),
               ],
             ),
           ],

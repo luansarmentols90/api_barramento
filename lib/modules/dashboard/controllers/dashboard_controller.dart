@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_this, avoid_print, library_private_types_in_public_api
 
 import 'package:app_barramento_api/modules/dashboard/models/responses/arts_model_response.dart';
+import 'package:app_barramento_api/modules/dashboard/models/responses/distance_model_response.dart';
 import 'package:app_barramento_api/modules/dashboard/services/dashboard_service.dart';
 import 'package:mobx/mobx.dart';
 
@@ -23,6 +24,9 @@ abstract class _DashboardController with Store {
 
   @observable
   List<Art>? modelArts = <Art>[];
+
+  @observable
+  DistanceModelResponse? distanceObj = DistanceModelResponse();
 
   @observable
   dynamic modelDistance;
@@ -54,7 +58,7 @@ abstract class _DashboardController with Store {
     try{
     
       this.isLoading = true;
-      this.modelArts = await _dashboardService.getDistanceDataApi();
+      this.distanceObj = await _dashboardService.getDistanceDataApi();
       this.isLoading = false;
     
     }catch(e){
